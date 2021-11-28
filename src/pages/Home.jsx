@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { Helmet } from 'react-helmet'
 
-import { Box, Container, Text, Image, Flex } from "@chakra-ui/react"
+import { Box, Skeleton, Text, Image, Flex } from "@chakra-ui/react"
 
 const Home = () => {
   const [lists, setLists] = useState([])
@@ -24,7 +24,7 @@ const Home = () => {
     }
     fetchBooks()
   },[])
-
+  const numbers = [1, 2, 3, 4, 5]
   return (
     <>
       <Helmet>
@@ -52,7 +52,7 @@ const Home = () => {
             </Flex>
           </>
           :
-          lists && lists.map((list, i) => (
+          lists.length > 0 ? lists.map((list, i) => (
             <>
               <Text fontSize="md" key={i}>{list.list_name}</Text>
               <Flex>
@@ -66,6 +66,17 @@ const Home = () => {
               </Flex>
             </>
           ))
+          :
+          <Flex>
+              { numbers.map(number => (
+                <Skeleton m="1" w={142} h={256}>
+                  <Box borderWidth="1px" borderRadius="sm" overflow="hidden" key={number}>
+                    <Text>Loading</Text>
+                  </Box>
+                </Skeleton>
+              ))
+              }
+          </Flex>
         }
       </Box>
     </>
